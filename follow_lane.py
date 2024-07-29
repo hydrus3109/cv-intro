@@ -30,15 +30,11 @@ def get_lane_center(lanes, img_width):
     # Compute center of each lane and find the closest
     for lane in lanes:
         for line in lane:
-            x1, y1, x2, y2 = line
-            # Calculate the average x position of the line
-            line_center_x = (x1 + x2) // 2
-            # Calculate the distance from the image center
-            distance = abs(img_center_x - line_center_x)
+            slopes, intercepts = get_slopes_intercepts([line])
+            distance = abs(img_center_x - intercepts[0])
             
             if distance < closest_distance:
                 closest_distance = distance
-                slopes, intercepts = get_slopes_intercepts([line])
                 closest_slope = slopes[0]
                 closest_intercept = intercepts[0]
 
